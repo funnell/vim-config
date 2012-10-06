@@ -1,120 +1,110 @@
-filetype on
-filetype plugin on
-filetype indent on
+set nocompatible    " disable vi compatibility
+let mapleader=','
 
-syntax on
+filetype off
+set history=256     " number of things to remember in history
+
+" Match and search
+set hlsearch        " highlight search
+set ignorecase      " case insensitive search
+set smartcase       " be sensitive when there's a capital letter
+set incsearch
+
+" Formatting {{{
+set tabstop=4       " default tab stop
+set softtabstop=4
+set shiftwidth=4    " default shift width for indents
+set expandtab       " convert tabs to spaces
+set smarttab        " smarter tab levels
 
 set autoindent
 set smartindent
-set nu
-set nocompatible
-set tabstop=4
-set shiftwidth=4
-set noexpandtab
-set guioptions-=T
-set nohlsearch
-set incsearch
-set showmatch
-set history=100
 
-" change directory to the current buffer's file's directory
-autocmd BufEnter * lcd %:p:h
-" get rid of the annoying bell
-autocmd VimEnter * set vb t_vb=
-" set html files to php filetype to allow php syntax highlighting, etc.
-autocmd BufNewFile,BufRead *.html set filetype=php
+syntax on                   " enable syntax highlighting
+filetype plugin indent on   " automatically detect filetypes
+" }}}
 
-" use closetag script for html, xml, xsl, php files
-autocmd Filetype html,xml,xsl,php source ~/.vim/scripts/closetag.vim
-" use the sparkup plugin for xml, xsl, php files
-autocmd Filetype xml,xsl,php source ~/.vim/ftplugin/html/sparkup.vim
-" highlights interpolated variables in sql strings and does sql-syntax highlighting
-"autocmd FileType php let php_sql_query=0
-" highlights html inside of php strings
-autocmd FileType php let php_htmlInStrings=1
-" discourages use of short tags
-autocmd FileType php let php_noShortTags=1
-" automagically folds functions & methods
-autocmd FileType php let php_folding=1
-" set the compiler for php files
-autocmd FileType php try | execute "compiler php" | catch /./ | endtry
+" Code completion
+au FileType python set omnifunc=pythoncomplete#Complete
+set completeopt=menuone,longest,preview
+let g:SuperTabDefaultCompletionType="context"
 
-" add a keyword for tex files so that <C-n> will cycle through figure labels
-autocmd FileType tex set iskeyword+=:
+" Visual {{{
+set nonumber        " line numbers off
+set showmatch       " show matching brackets
+set matchtime=5     " bracket blinking
+set novisualbell    " no visual bell (blinking)
+set noerrorbells    " no audio bell
+set laststatus=2    " always show status line
+set vb t_vb=        " disable bell on error
 
-" autocomplete funcs and identifiers for languages
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType c set omnifunc=ccomplete#Complete
+set nolist          " display unprintable characters f12 - switches
+set listchars=tab:·\ ,eol:¶,trail:·,extends:»,precedes:« " unprintable chars mapping
 
-" set 256 colour mode for molokai to work in the terminal
-set t_Co=256
-colorscheme wombat
-" sets the molokai background to a dark grey
-let g:molokai_original=0
+set foldenable          " turn on folding
+set foldmethod=marker   " fold on the marker
+set foldlevel=100       " don't autofold anything (can still fold manually)
+set foldopen=block,hor,mark,percent,quickfix,tag " what movements open folds 
 
-" .tex files should be treated as latex files
-let g:tex_flavor='latex'
-" generate pdfs from latex
-let g:Tex_DefaultTargetFormat='pdf'
-" set the pdf viewer
-let g:Tex_ViewRule_pdf='evince'
+set mouse-=a   " disable mouse
+set mousehide  " hide mouse after chars typed
 
-function! InsertCloseTag()
-  if &filetype == 'html'
+set splitbelow
+set splitright
+" }}}
 
-    " list of tags which shouldn't be closed:
-    let UnaryTags = ' Area Base Br DD DT HR Img Input LI Link Meta P Param '
 
-    " remember current position:
-    normal mz
+" Plugins {{{
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
 
-    " loop backwards looking for tags:
-    let Found = 0
-    while Found == 0
-      " find the previous <, then go forwards one character and grab the first
-      " character plus the entire word:
-      execute "normal ?\<LT>\<CR>l"
-      normal "zyl
-      let Tag = expand('<cword>')
+" Vundle
+Bundle 'gmarik/vundle'
 
-      " if this is a closing tag, skip back to its matching opening tag:
-      if @z == '/'
-        execute "normal ?\<LT>" . Tag . "\<CR>"
+" Solarized theme
+Bundle 'altercation/vim-colors-solarized'
+let g:solarized_termtrans=1
+set background=dark
+colorscheme solarized
 
-      " if this is a unary tag, then position the cursor for the next
-      " iteration:
-      elseif match(UnaryTags, ' ' . Tag . ' ') > 0
-        normal h
 
-      " otherwise this is the tag that needs closing:
-      else
-        let Found = 1
+" Fugitive
+Bundle 'tpope/vim-fugitive'
 
-      endif
-    endwhile " not yet found match
+" NERDCommenter
+Bundle 'scrooloose/nerdcommenter'
 
-    " create the closing tag and insert it:
-    let @z = '</' . Tag . '>'
-    normal `z
-    if col('.') == 1
-      normal "zP
-    else
-      normal "zp
-    endif
+" Command-T
+Bundle 'wincent/Command-T'
 
-  else " filetype is not HTML
-    echohl ErrorMsg
-    echo 'The InsertCloseTag() function is only intended to be used in HTML ' .
-      \ 'files.'
-    sleep
-    echohl None
+" Python code
+Bundle 'pyflakes'
+Bundle 'pep8'
 
-  endif " check on filetype
+" Vim
+Bundle 'Lokaltog/vim-powerline'
+let g:Powerline_symbols='fancy'
 
-endfunction " InsertCloseTag()
+" Brief help
+" :BundleList          - list configured bundles
+" :BundleInstall(!)    - install(update) bundles
+" :BundleSearch(!) foo - search(or refresh cache first) for foo
+" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+"
+" see :h vundle for more details or wiki for FAQ
+" NOTE: comments after Bundle command are not allowed..
 
+" }}}
+"
+
+" Add the virtualenv's site-packages to vim path
+py << EOF
+import os.path
+import sys
+import vim
+if 'VIRTUAL_ENV' in os.environ:
+    project_base_dir = os.environ['VIRTUAL_ENV']
+    sys.path.insert(0, project_base_dir)
+    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+    execfile(activate_this, dict(__file__=activate_this))
+EOF
