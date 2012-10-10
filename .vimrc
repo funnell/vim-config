@@ -1,4 +1,6 @@
 set nocompatible    " disable vi compatibility
+set encoding=utf-8
+
 let mapleader=','
 
 filetype off
