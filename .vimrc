@@ -1,10 +1,10 @@
 set nocompatible    " disable vi compatibility
-set encoding=utf-8
-
 let mapleader=','
 
 filetype off
 set history=256     " number of things to remember in history
+
+set backspace=indent,eol,start  " allow better backspace
 
 " Match and search
 set hlsearch        " highlight search
@@ -80,12 +80,15 @@ Bundle 'scrooloose/nerdcommenter'
 Bundle 'wincent/Command-T'
 
 " Python code
-Bundle 'pyflakes'
-Bundle 'pep8'
+Bundle 'scrooloose/syntastic'
 
 " Vim
 Bundle 'Lokaltog/vim-powerline'
 let g:Powerline_symbols='fancy'
+
+" R
+Bundle 'Vim-R-plugin'
+Bundle 'Screen-vim---gnu-screentmux'
 
 " Brief help
 " :BundleList          - list configured bundles
