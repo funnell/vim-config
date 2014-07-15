@@ -1,7 +1,53 @@
 set nocompatible    " disable vi compatibility
+filetype off
+
+" Plugins {{{
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" Vundle
+Plugin 'gmarik/Vundle.vim'
+
+" Solarized theme
+Plugin 'altercation/vim-colors-solarized'
+
+" Fugitive
+Plugin 'tpope/vim-fugitive'
+
+" NERDCommenter
+Plugin 'scrooloose/nerdcommenter'
+
+" Command-T
+Plugin 'wincent/Command-T'
+
+" Code checking
+Plugin 'scrooloose/syntastic'
+
+" Vim
+Plugin 'Lokaltog/vim-powerline'
+
+" Julia
+Plugin 'JuliaLang/julia-vim'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList          - list configured bundles
+" :PluginInstall(!)    - install(update) bundles
+" :PluginSearch(!) foo - search(or refresh cache first) for foo
+" :PluginClean(!)      - confirm(or auto-approve) removal of unused bundles
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+" }}}
+"
+
 let mapleader=','
 
-filetype off
 set history=256     " number of things to remember in history
 
 " Match and search
@@ -22,6 +68,7 @@ set smartindent
 
 syntax on                   " enable syntax highlighting
 filetype plugin indent on   " automatically detect filetypes
+set omnifunc=syntaxcomplete#Complete
 " }}}
 
 " Code completion
@@ -51,51 +98,13 @@ set mousehide  " hide mouse after chars typed
 
 set splitbelow
 set splitright
-" }}}
 
-
-" Plugins {{{
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-" Vundle
-Bundle 'gmarik/vundle'
-
-" Solarized theme
-Bundle 'altercation/vim-colors-solarized'
 let g:solarized_termtrans=1
 set background=dark
 colorscheme solarized
 
-
-" Fugitive
-Bundle 'tpope/vim-fugitive'
-
-" NERDCommenter
-Bundle 'scrooloose/nerdcommenter'
-
-" Command-T
-Bundle 'wincent/Command-T'
-
-" Python code
-Bundle 'pyflakes'
-Bundle 'pep8'
-
-" Vim
-Bundle 'Lokaltog/vim-powerline'
 let g:Powerline_symbols='fancy'
-
-" Brief help
-" :BundleList          - list configured bundles
-" :BundleInstall(!)    - install(update) bundles
-" :BundleSearch(!) foo - search(or refresh cache first) for foo
-" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
-"
-" see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Bundle command are not allowed..
-
 " }}}
-"
 
 " Add the virtualenv's site-packages to vim path
 py << EOF
