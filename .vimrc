@@ -29,6 +29,10 @@ Plugin 'Lokaltog/vim-powerline'
 " Julia
 Plugin 'JuliaLang/julia-vim'
 
+" R
+Bundle 'Vim-R-plugin'
+Bundle 'Screen-vim---gnu-screentmux'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -49,6 +53,8 @@ filetype plugin indent on    " required
 let mapleader=','
 
 set history=256     " number of things to remember in history
+
+set backspace=indent,eol,start  " allow better backspace
 
 " Match and search
 set hlsearch        " highlight search
