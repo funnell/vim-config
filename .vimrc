@@ -8,7 +8,7 @@ call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 
-" let Vundle manage Vundle, required
+" Vundle
 Plugin 'VundleVim/Vundle.vim'
 
 " Solarized theme
@@ -92,6 +92,7 @@ au FileType python set omnifunc=pythoncomplete#Complete
 set completeopt=menuone,longest,preview
 let g:SuperTabDefaultCompletionType="context"
 
+" Snakefile
 au BufNewFile,BufRead Snakefile set syntax=snakemake
 au BufNewFile,BufRead *.rules set syntax=snakemake
 au BufNewFile,BufRead *.snakefile set syntax=snakemake
@@ -122,7 +123,11 @@ set splitright
 
 "set t_Co=256        " use 256 colour mode
 
+let g:Powerline_symbols='fancy'
+
+" Colour scheme
 let g:solarized_termtrans=1
+syntax enable
 set background=dark
 colorscheme solarized
 " }}}
