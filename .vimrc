@@ -11,14 +11,13 @@ call vundle#begin()
 " Vundle
 Plugin 'VundleVim/Vundle.vim'
 
-" Solarized theme
-Plugin 'altercation/vim-colors-solarized'
-
 " Fugitive
 Plugin 'tpope/vim-fugitive'
 
 " NERDCommenter
 Plugin 'scrooloose/nerdcommenter'
+let g:NERDSpaceDelims = 1
+let g:NERDCustomDelimiters = {'snakemake': {'left': '#'}}
 
 " Command-T
 Plugin 'wincent/Command-T'
@@ -27,15 +26,18 @@ Plugin 'wincent/Command-T'
 Plugin 'scrooloose/syntastic'
 
 " Vim
-Plugin 'Lokaltog/vim-powerline'
-let g:Powerline_symbols='fancy'
+Plugin 'itchyny/lightline.vim'
+let g:lightline = {'colorscheme': 'Tomorrow_Night'}
+
+" Tomorrow Theme
+Plugin 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
 
 " R
 Plugin 'Vim-R-plugin'
 Plugin 'Screen-vim---gnu-screentmux'
 
 " Julia
-Plugin 'JuliaLang/julia-vim'
+Plugin 'funnell/julia-vim'
 Plugin 'benekastah/neomake'
 Plugin 'zyedidia/julialint.vim'
 
@@ -67,6 +69,8 @@ set history=256     " number of things to remember in history
 
 set backspace=indent,eol,start  " allow better backspace
 
+set shell=bash
+
 " Match and search
 set hlsearch        " highlight search
 set ignorecase      " case insensitive search
@@ -93,10 +97,10 @@ set completeopt=menuone,longest,preview
 let g:SuperTabDefaultCompletionType="context"
 
 " Snakefile
-au BufNewFile,BufRead Snakefile set syntax=snakemake
-au BufNewFile,BufRead *.rules set syntax=snakemake
-au BufNewFile,BufRead *.snakefile set syntax=snakemake
-au BufNewFile,BufRead *.snake set syntax=snakemake
+au BufNewFile,BufRead Snakefile set syntax=snakemake filetype=snakemake
+au BufNewFile,BufRead *.rules set syntax=snakemake filetype=snakemake
+au BufNewFile,BufRead *.snakefile set syntax=snakemake filetype=snakemake
+au BufNewFile,BufRead *.snake set syntax=snakemake filetype=snakemake
 
 " Visual {{{
 set nonumber        " line numbers off
@@ -105,6 +109,7 @@ set matchtime=5     " bracket blinking
 set novisualbell    " no visual bell (blinking)
 set noerrorbells    " no audio bell
 set laststatus=2    " always show status line
+set noshowmode      " don't show mode
 set vb t_vb=        " disable bell on error
 
 set nolist          " display unprintable characters f12 - switches
@@ -121,15 +126,11 @@ set mousehide  " hide mouse after chars typed
 set splitbelow
 set splitright
 
-"set t_Co=256        " use 256 colour mode
-
-let g:Powerline_symbols='fancy'
 
 " Colour scheme
-let g:solarized_termtrans=1
 syntax enable
-set background=dark
-colorscheme solarized
+set t_Co=256        " use 256 colour mode
+color Tomorrow-Night
 " }}}
 
 " Syntastic
