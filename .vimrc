@@ -32,6 +32,10 @@ let g:lightline = {'colorscheme': 'Tomorrow_Night'}
 " Tomorrow Theme
 Plugin 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
 
+" Tmux
+Bundle 'edkolev/tmuxline.vim'
+let g:tmuxline_theme = 'lightline'
+
 " R
 Plugin 'Vim-R-plugin'
 Plugin 'Screen-vim---gnu-screentmux'
@@ -98,9 +102,7 @@ let g:SuperTabDefaultCompletionType="context"
 
 " Snakefile
 au BufNewFile,BufRead Snakefile set syntax=snakemake filetype=snakemake
-au BufNewFile,BufRead *.rules set syntax=snakemake filetype=snakemake
-au BufNewFile,BufRead *.snakefile set syntax=snakemake filetype=snakemake
-au BufNewFile,BufRead *.snake set syntax=snakemake filetype=snakemake
+au BufNewFile,BufRead *.smk set syntax=snakemake filetype=snakemake
 
 " Visual {{{
 set nonumber        " line numbers off
@@ -131,7 +133,14 @@ set splitright
 syntax enable
 set t_Co=256        " use 256 colour mode
 color Tomorrow-Night
+highlight clear SpellBad
+highlight clear SpellCap
+hi SpellBad gui=undercurl guisp=red term=undercurl cterm=undercurl
+hi SpellCap gui=undercurl guisp=red term=undercurl cterm=undercurl
 " }}}
 
 " Syntastic
 let g:syntastic_python_checkers = ['flake8']
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
