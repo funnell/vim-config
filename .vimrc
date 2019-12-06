@@ -48,6 +48,12 @@ Plugin 'zyedidia/julialint.vim'
 " Snakemake
 Plugin 'https://bitbucket.org/snakemake/snakemake.git', {'rtp': 'misc/vim/'}
 
+" YouCompleteMe
+" Plugin 'Valloric/YouCompleteMe'
+
+"TabNine
+Plugin 'zxqfl/tabnine-vim'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
